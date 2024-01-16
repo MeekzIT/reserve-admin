@@ -124,9 +124,9 @@ export const userReducer = (state = initialState, action) => {
         items: action.payload.items,
       };
     case EDIT_BOX:
-      const { id, name, geolocation } = action.payload;
+      const { id, name, desc, lat, lng } = action.payload;
       const updatedItems = state.boxes.map((item) =>
-        item.id === id ? { ...item, name, geolocation } : item
+        item.id === id ? { ...item, name, desc, lat, lng } : item
       );
       return { ...state, boxes: updatedItems };
     case ADD_BOX:

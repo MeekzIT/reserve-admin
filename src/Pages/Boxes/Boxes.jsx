@@ -23,6 +23,7 @@ import { useIsMobile } from "../../hooks/useScreenType";
 import { addBox } from "../../store/actions/box";
 import CloseIcon from "@mui/icons-material/Close";
 import GoBack from "../../components/goBack/GoBack";
+import { YMaps, Map, Placemark, ZoomControl } from "react-yandex-maps";
 
 const Boxes = () => {
   const { id, user_id, owner: ownerParam } = useParams();
@@ -40,6 +41,26 @@ const Boxes = () => {
   const [name, setName] = useState(null);
   const [geo, setGeo] = useState(null);
   const [openAdd, setOpenAdd] = useState(false);
+  const [pinCoordinates, setPinCoordinates] = useState([40.18111, 44.51361]); // Initial coordinates
+
+  const handlePinDrag = (e) => {
+    const newCoordinates = e.get("target").geometry.getCoordinates();
+    setPinCoordinates(newCoordinates);
+    console.log("Pin dragged to:", {
+      lat: newCoordinates[0],
+      lng: newCoordinates[1],
+    });
+  };
+
+  const handleMapClick = (e) => {
+    const clickedCoordinates = e.get("coords");
+    setPinCoordinates(clickedCoordinates);
+    console.log("Map clicked at:", {
+      lat: clickedCoordinates[0],
+      lng: clickedCoordinates[1],
+    });
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -105,10 +126,7 @@ const Boxes = () => {
                   <TableRow>
                     <TableCell>{t("name")}</TableCell>
                     <TableCell align="left"></TableCell>
-
-                    <TableCell align="left">{t("geolocation")}</TableCell>
                     <TableCell align="left">{t("edit")}</TableCell>
-                    <TableCell align="left">{t("difrentExspenses")}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -138,7 +156,9 @@ const Boxes = () => {
                           variant="outlined"
                           onClick={() => {
                             setName(row.name);
-                            setGeo(row.geolocation);
+                            setGeo(row.desc);
+                            setPinCoordinates([row.lat, row.lng]);
+
                             setCurrentId(row.id);
 
                             setOpen(true);
@@ -204,12 +224,33 @@ const Boxes = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t("geolocation")}
+                  label={t("desc")}
                   variant="outlined"
                   fullWidth
                   value={geo}
                   onChange={(e) => setGeo(e.target.value)}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <YMaps>
+                  <Map
+                    defaultState={{ center: pinCoordinates, zoom: 12 }}
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      background: "red",
+                    }}
+                    onClick={handleMapClick}
+                    controls={["smallMapDefaultSet"]}
+                  >
+                    <ZoomControl options={{ float: "right" }} />
+                    <Placemark
+                      geometry={pinCoordinates}
+                      options={{ draggable: true }}
+                      onDrag={handlePinDrag}
+                    />
+                  </Map>
+                </YMaps>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography
@@ -231,14 +272,18 @@ const Boxes = () => {
                           changeBoxSettings({
                             id: currentId,
                             name,
-                            geolocation: geo,
+                            desc: geo,
+                            lat: pinCoordinates[0],
+                            lng: pinCoordinates[1],
                           })
                         );
                         setOpen(false);
                         setGeo("");
                         setName("");
+                        setPinCoordinates([40.18111, 44.51361]);
                       }}
                     >
+                      {/* 40.17482788135482, lng: 44.56592630820124} */}
                       {t("edit")}
                     </Button>
                   </div>
@@ -274,12 +319,33 @@ const Boxes = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t("geolocation")}
+                  label={t("desc")}
                   variant="outlined"
                   fullWidth
                   value={geo}
                   onChange={(e) => setGeo(e.target.value)}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <YMaps>
+                  <Map
+                    defaultState={{ center: pinCoordinates, zoom: 12 }}
+                    style={{
+                      width: "100%",
+                      height: "300px",
+                      background: "red",
+                    }}
+                    onClick={handleMapClick}
+                    controls={["smallMapDefaultSet"]}
+                  >
+                    <ZoomControl options={{ float: "right" }} />
+                    <Placemark
+                      geometry={pinCoordinates}
+                      options={{ draggable: true }}
+                      onDrag={handlePinDrag}
+                    />
+                  </Map>
+                </YMaps>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <Typography
@@ -304,12 +370,15 @@ const Boxes = () => {
                           addBox({
                             ownerId: id,
                             name,
-                            geolocation: geo,
+                            desc: geo,
+                            lat: pinCoordinates[0],
+                            lng: pinCoordinates[1],
                           })
                         );
                         setOpenAdd(false);
                         setGeo("");
                         setName("");
+                        setPinCoordinates([40.18111, 44.51361]);
                       }}
                     >
                       {t("add")}

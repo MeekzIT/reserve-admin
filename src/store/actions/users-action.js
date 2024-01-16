@@ -105,7 +105,7 @@ export const getSingleUser = (id) => {
 export const getBoxes = (id, boxId) => {
   return (dispatch) => {
     axios
-      .get(`${keys.api}/owner/boxes-owners`, {
+      .get(`${keys.api}/box`, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
@@ -179,7 +179,7 @@ export const changePassword = (data) => {
 export const changeBoxSettings = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/box/edit-box`, data, {
+      .post(`${keys.api}/box/edit`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },

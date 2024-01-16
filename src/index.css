@@ -182,3 +182,42 @@ body {
   color: #008491;
   padding-left: 10px;
 }
+
+/* map */
+
+.react-yandex-maps {
+  .ymaps-2-1-78-controls__zoom-in,
+  .ymaps-2-1-78-controls__zoom-out {
+    background-color: #008491 !important; /* Custom color */
+    color: #fff !important; /* Text color */
+  }
+
+  .ymaps-2-1-78-placemark {
+    fill: #008491 !important; /* Placemark fill color */
+    stroke: #fff !important; /* Placemark border color */
+  }
+}
+
+/* .ymaps-layers-pane {
+	filter: hue-rotate(260deg);
+  	-ms-filter: hue-rotate(260deg);
+	-webkit-filter: hue-rotate(260deg);
+ 	-moz-filter: hue-rotate(260deg);
+	-o-filter: hue-rotate(260deg);  
+} */
+
+/* .ymaps-layers-pane {
+	filter: hue-rotate(180deg) !important;
+	-ms-filter: hue-rotate(180deg) !important;
+	-webkit-filter: hue-rotate(180deg) !important;
+	-moz-filter: hue-rotate(180deg) !important;
+	-o-filter: hue-rotate(180deg) !important;
+} */
+
+.ymaps-2-1-79-ground-pane {
+  	filter: hue-rotate(180deg) !important;
+	-ms-filter: hue-rotate(180deg) !important;
+	-webkit-filter: hue-rotate(180deg) !important;
+	-moz-filter: hue-rotate(180deg) !important;
+	-o-filter: hue-rotate(180deg) !important;
+}
