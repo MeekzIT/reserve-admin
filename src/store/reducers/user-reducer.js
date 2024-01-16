@@ -33,6 +33,7 @@ import {
   ADD_BOX,
   GET_ITEM_LINEAR,
   GET_BOX_LINEAR,
+  DESTSROY_BOX,
 } from "../types";
 
 const initialState = {
@@ -133,6 +134,12 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         boxes: [...state.boxes, action.payload],
+      };
+    case DESTSROY_BOX:
+      const editedNoxData = state.boxes.filter((i) => i.id !== action.payload);
+      return {
+        ...state,
+        boxes: editedNoxData,
       };
     case GET_SINGLE_OWNER:
       let singleOwner = state.single?.Owners?.filter(

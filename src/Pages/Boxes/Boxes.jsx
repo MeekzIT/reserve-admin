@@ -11,6 +11,7 @@ import {
   getSingleUser,
 } from "../../store/actions/users-action";
 import Table from "@mui/material/Table";
+import DeleteIcon from "@mui/icons-material/Delete";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -20,7 +21,7 @@ import Paper from "@mui/material/Paper";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import EditIcon from "@mui/icons-material/Edit";
 import { useIsMobile } from "../../hooks/useScreenType";
-import { addBox } from "../../store/actions/box";
+import { addBox, destroyBox } from "../../store/actions/box";
 import CloseIcon from "@mui/icons-material/Close";
 import GoBack from "../../components/goBack/GoBack";
 import { YMaps, Map, Placemark, ZoomControl } from "react-yandex-maps";
@@ -36,12 +37,15 @@ const Boxes = () => {
   const owner = useSelector((state) => state.user.owner);
   const data = useSelector((state) => state.user.boxes);
   const boxInfo = useSelector((state) => state.user.boxInfo);
+  const [openDelete, setOpenDelete] = useState(false);
   const [open, setOpen] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const [name, setName] = useState(null);
   const [geo, setGeo] = useState(null);
   const [openAdd, setOpenAdd] = useState(false);
   const [pinCoordinates, setPinCoordinates] = useState([40.18111, 44.51361]); // Initial coordinates
+
+  const handleCloseDelete = () => setOpenDelete(false);
 
   const handlePinDrag = (e) => {
     const newCoordinates = e.get("target").geometry.getCoordinates();
@@ -89,7 +93,6 @@ const Boxes = () => {
     user && dispatch(getSingleOwners(id));
   }, [user]);
 
-  console.log(boxInfo, "boxInfoboxInfoboxInfoboxInfoboxInfo");
   return (
     <div>
       <Box m={3}>
@@ -126,7 +129,9 @@ const Boxes = () => {
                   <TableRow>
                     <TableCell>{t("name")}</TableCell>
                     <TableCell align="left"></TableCell>
-                    <TableCell align="left">{t("edit")}</TableCell>
+                    <TableCell align="left"></TableCell>
+                    <TableCell align="left"></TableCell>
+                    <TableCell align="left"></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -165,6 +170,17 @@ const Boxes = () => {
                           }}
                         >
                           <EditIcon />
+                        </Button>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setOpenDelete(true);
+                            setCurrentId(row.id);
+                          }}
+                        >
+                          <DeleteIcon sx={{ color: "white" }} />
                         </Button>
                       </TableCell>
 
@@ -388,6 +404,44 @@ const Boxes = () => {
               </Grid>
             </Grid>
           </Box>
+        </Box>
+      </Modal>
+      <Modal
+        open={openDelete}
+        onClose={handleCloseDelete}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {t("delete")} ?
+          </Typography>
+          <Typography
+            className="btnsBox"
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+          >
+            <div>
+              <Button
+                variant="contained"
+                onClick={handleCloseDelete}
+                sx={{ color: "white" }}
+              >
+                No
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  dispatch(destroyBox({ id: currentId }));
+                  handleCloseDelete();
+                }}
+              >
+                Yes
+              </Button>
+            </div>
+          </Typography>
         </Box>
       </Modal>
     </div>

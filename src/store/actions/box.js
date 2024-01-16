@@ -4,6 +4,7 @@ import {
   ADD_BOX,
   ADD_BOX_EXSPENSE,
   DESTROY_BOX_EXSPENSE,
+  DESTSROY_BOX,
   EDIT_BOX_EXSPENSES,
   GET_BOX_EXPENSES,
 } from "../types";
@@ -129,6 +130,35 @@ export const destroyBoxExpenses = (data) => {
         if (response.data.succes) {
           dispatch({
             type: DESTROY_BOX_EXSPENSE,
+            payload: data.id,
+          });
+          Swal.fire({
+            position: "center",
+            iconColor: "#008491",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+export const destroyBox = (data) => {
+  return (dispatch) => {
+    axios
+      .post(`${keys.api}/box/destroy`, data, {
+        headers: {
+          Authorization: `Bearer ${keys.token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.succes) {
+          dispatch({
+            type: DESTSROY_BOX,
             payload: data.id,
           });
           Swal.fire({

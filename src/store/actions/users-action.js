@@ -718,7 +718,7 @@ export const getBoxLinear = (data) => {
 export const changeName = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/owner/item-edit-name`, data, {
+      .post(`${keys.api}/item/edit`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },

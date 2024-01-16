@@ -32,6 +32,7 @@ export const EDIT_BOX_EXSPENSES = "EDIT_BOX_EXSPENSES";
 export const ADD_BOX_EXSPENSE = "ADD_BOX_EXSPENSE";
 export const ADD_BOX = "ADD_BOX";
 export const DESTROY_BOX_EXSPENSE = "DESTROY_BOX_EXSPENSE";
+export const DESTSROY_BOX = "DESTSROY_BOX";
 export const GET_ADMINS = "GET_ADMINS";
 export const CRATE_ADMIN = "CRATE_ADMIN";
 export const DESTSROY_ADMIN = "DESTSROY_ADMIN";
