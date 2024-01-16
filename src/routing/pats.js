@@ -1,0 +1,13 @@
+export const HOME_PAGE = "/";
+export const LOGIN_PAGE = "/login";
+export const USERS_PAGE = "/users";
+export const USER_DETAIL = "/user/:id";
+export const COUNTRIES_PAGE = "/countries";
+export const SETTIGS_PAGE = "/settings";
+export const ADMINS_PAGE = "/admins";
+export const OWNERS_BOXES = "/user/:user_id/owner/:id";
+export const ITEM_PAGE = "/user/:user_id/owner/:owner_id/item/:id";
+export const ITEM_SINGLE_PAGE = "/owner/:owner_id/item/:id/:single/:active";
+export const BOXES_PAGE = "/boxes";
+export const OWNER_ITEMS_PAGE = "/owner-items/:id/:box_id";
+export const ADMIN_USERS = "/admin-user/:id";
