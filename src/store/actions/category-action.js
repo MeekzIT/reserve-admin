@@ -188,8 +188,33 @@ export const delItemCategories = (data) => {
         if (response.data.succes) {
           dispatch({
             type: DEL_ITEM_CATEGORY,
-            payload: response.data,
+            payload: data.id,
           });
+          Swal.fire({
+            position: "center",
+            iconColor: "#008491",
+            icon: "success",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+};
+
+export const editItemCategories = (data) => {
+  return (dispatch) => {
+    axios
+      .post(`${keys.api}/item/edit-mode`, data, {
+        headers: {
+          Authorization: `Bearer ${keys.token}`,
+        },
+      })
+      .then((response) => {
+        if (response.data.succes) {
           Swal.fire({
             position: "center",
             iconColor: "#008491",

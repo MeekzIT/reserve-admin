@@ -7,7 +7,6 @@ import {
   COUNTRIES_PAGE,
   HOME_PAGE,
   ITEM_PAGE,
-  ITEM_SINGLE_PAGE,
   LOGIN_PAGE,
   OWNERS_BOXES,
   OWNER_ITEMS_PAGE,
@@ -26,7 +25,6 @@ import OwnerBoxes from "../Pages/ownerBoxes/OwnerBoxes";
 import OwnerItems from "../Pages/ownerBoxes/OwnerItems";
 import Admins from "../Pages/admins/Admins";
 import AdminUser from "../Pages/admins/AdminUsers";
-import Single from "../Pages/items/Single";
 import Categories from "../Pages/categories/Categories";
 
 export const isAuthPages = [
@@ -42,7 +40,6 @@ export const isAuthPages = [
   { id: 11, path: OWNER_ITEMS_PAGE, Component: <OwnerItems /> },
   { id: 12, path: ADMINS_PAGE, Component: <Admins /> },
   { id: 14, path: ADMIN_USERS, Component: <AdminUser /> },
-  { id: 15, path: ITEM_SINGLE_PAGE, Component: <Single /> },
 ];
 
 export const notAuthPages = [{ id: 2, path: LOGIN_PAGE, Component: LoginPage }];

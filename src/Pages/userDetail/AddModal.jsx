@@ -178,17 +178,6 @@ const AddOwner = ({ open, handleClose }) => {
                       }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12}>
-                    <Field
-                      as={TextField}
-                      name="deviceOwner"
-                      label="Owner device ID"
-                      variant="outlined"
-                      fullWidth
-                      error={touched.deviceOwner && Boolean(errors.deviceOwner)}
-                      helperText={touched.deviceOwner && errors.deviceOwner}
-                    />
-                  </Grid>
                   <Grid item xs={12}>
                     <Button
                       mt={3}
@@ -202,6 +191,18 @@ const AddOwner = ({ open, handleClose }) => {
                       Genarate Password
                     </Button>
                   </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Field
+                      as={TextField}
+                      name="deviceOwner"
+                      label="Owner device ID"
+                      variant="outlined"
+                      fullWidth
+                      error={touched.deviceOwner && Boolean(errors.deviceOwner)}
+                      helperText={touched.deviceOwner && errors.deviceOwner}
+                    />
+                  </Grid>
+
                   <Grid item xs={12}>
                     <Field
                       as={TextField}

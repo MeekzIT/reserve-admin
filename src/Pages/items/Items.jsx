@@ -32,39 +32,7 @@ import {
 } from "../../store/actions/category-action";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-
-function CustomTabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-CustomTabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+import BoxSettings from "./BoxSettings";
 
 const Items = () => {
   const { t } = useTranslation();
@@ -81,18 +49,14 @@ const Items = () => {
   const [name, setName] = useState("");
   const [openName, setOpenName] = useState(false);
   const [openMode, setOpenMode] = useState(false);
-  const [value, setValue] = React.useState(0);
-  console.log(itemCategories, newCategories, "-------");
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [openSettings, setOpenSettings] = useState(false);
 
   const styleName = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: isMobile ? "100%" : 400,
+    width: isMobile ? "100%" : 600,
     bgcolor: "background.paper",
     border: "3px solid #008491",
     boxShadow: 24,
@@ -120,90 +84,91 @@ const Items = () => {
       </Box>
       <hr />
       <Box m={2}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="Settings" {...a11yProps(0)} />
-            <Tab label="Posts" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-        <CustomTabPanel value={value} index={0}>
-          Item One
-        </CustomTabPanel>
-        <CustomTabPanel value={value} index={1}>
-          <Box sx={{ overflow: "auto" }}>
-            <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                  <TableBody>
-                    {items?.map((row) => (
-                      <TableRow
-                        key={row.name}
+        <Box sx={{ overflow: "auto" }}>
+          <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableBody>
+                  {items?.map((row) => (
+                    <TableRow
+                      key={row.name}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                      }}
+                    >
+                      <TableCell
+                        align="left"
                         sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
+                          display: "flex",
+                          alignItems: "center",
                         }}
                       >
-                        <TableCell
-                          align="left"
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
+                        {compareWithUTC(row.datatime) ? (
+                          <span className="online">
+                            <CircleIcon />
+                          </span>
+                        ) : (
+                          <span className="offline">
+                            <CircleIcon />
+                          </span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <Typography> N {row.name}</Typography>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setCurrent(row.p2);
+                            dispatch(
+                              getItemCategories({
+                                id: row.p2,
+                              })
+                            );
+                            setOpenSettings(true);
                           }}
                         >
-                          {compareWithUTC(row.datatime) ? (
-                            <span className="online">
-                              <CircleIcon />
-                            </span>
-                          ) : (
-                            <span className="offline">
-                              <CircleIcon />
-                            </span>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <Typography> N {row.name}</Typography>
-                        </TableCell>
+                          {t("settings")}
+                        </Button>
+                      </TableCell>
 
-                        <TableCell align="left">
-                          <Button
-                            variant="contained"
-                            onClick={() => {
-                              setCurrent(row.p2);
-                              setName(row.name);
-                              setOpenName(true);
-                            }}
-                          >
-                            {t("edit")}
-                          </Button>
-                        </TableCell>
-                        <TableCell align="left">
-                          <Button
-                            variant="contained"
-                            onClick={() => {
-                              setCurrent(row.p2);
-                              dispatch(
-                                getItemCategories({
-                                  id: row.p2,
-                                })
-                              );
-                              setOpenMode(true);
-                            }}
-                          >
-                            {t("add-modessss")}
-                          </Button>
-                        </TableCell>
-                        <TableCell align="left">ID-{row.p2}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Box>
+                      <TableCell align="left">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setCurrent(row.p2);
+                            dispatch(
+                              getItemCategories({
+                                id: row.p2,
+                              })
+                            );
+                            setOpenMode(true);
+                          }}
+                        >
+                          {t("add-modes")}
+                        </Button>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setCurrent(row.p2);
+                            setName(row.name);
+                            setOpenName(true);
+                          }}
+                        >
+                          {t("edit")}
+                        </Button>
+                      </TableCell>
+                      <TableCell align="left">ID-{row.p2}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
-        </CustomTabPanel>
+        </Box>
       </Box>
       <div>
         <Modal
@@ -214,7 +179,7 @@ const Items = () => {
         >
           <Box sx={styleName}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              {t("categories")}
+              {t("mode")}
             </Typography>
             <div
               className="mobile-modal-close-btn"
@@ -231,13 +196,22 @@ const Items = () => {
                   return (
                     <Chip
                       label={i?.Category?.name}
-                      onDelete={() =>
+                      variant="outlined"
+                      sx={{
+                        borderColor: "#008491",
+                      }}
+                      onDelete={() => {
                         dispatch(
                           delItemCategories({
                             id: i.id,
                           })
-                        )
-                      }
+                        );
+                        dispatch(
+                          getItemCategories({
+                            id: current,
+                          })
+                        );
+                      }}
                     />
                   );
                 })}
@@ -257,7 +231,9 @@ const Items = () => {
                       label={i.name}
                       sx={{
                         cursor: "pointer",
+                        borderColor: "#008491",
                       }}
+                      variant="outlined"
                       onClick={() =>
                         dispatch(
                           addItemCategories({
@@ -310,6 +286,29 @@ const Items = () => {
                 {t("save")}
               </Button>
             </Box>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={openSettings}
+          onClose={() => {
+            setOpenMode(false);
+          }}
+        >
+          <Box sx={styleName}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {t("settings")}
+            </Typography>
+            <div
+              className="mobile-modal-close-btn"
+              onClick={() => {
+                setOpenSettings(false);
+              }}
+            >
+              <CloseIcon fontSize="large" />
+            </div>
+
+            <BoxSettings data={itemCategories} />
           </Box>
         </Modal>
       </div>

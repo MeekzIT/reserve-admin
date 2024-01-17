@@ -262,6 +262,7 @@ const Categories = () => {
                         );
                         dispatch(getCategories());
                         setOpenAdd(false);
+                        setNameHy(null);
                       }}
                     >
                       {t("add")}

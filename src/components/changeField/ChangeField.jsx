@@ -27,9 +27,8 @@ const ChangeField = ({ name, value, handleChangeData, title }) => {
             value={fieldValue || value}
             onChange={(e) => setFieldValue(e.target.value)}
           />
-          <div>
+          <div style={{ display: "flex" }}>
             <Button
-              variant="outlined"
               onClick={() => {
                 handleChangeData(name, fieldValue);
                 changeFieldState();
@@ -38,7 +37,6 @@ const ChangeField = ({ name, value, handleChangeData, title }) => {
               {t("save")}
             </Button>
             <Button
-              variant="outlined"
               onClick={() => {
                 setFieldValue(value);
                 handleChangeData(name, value);
@@ -56,7 +54,7 @@ const ChangeField = ({ name, value, handleChangeData, title }) => {
             value={fieldValue ? fieldValue : value}
             disabled
           />
-          <Button variant="outlined" onClick={changeFieldState}>
+          <Button onClick={changeFieldState}>
             <EditIcon />
           </Button>
         </div>

@@ -196,5 +196,7 @@
   "add-object":"Add new location",
   "benefit":"Benefit",
   "expenses":"Expenses",
-  "all":"All"
+  "all":"All",
+  "add-modes":"Add mode",
+  "mode":"mode"
 }
