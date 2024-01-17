@@ -3,6 +3,7 @@ import {
   ADMINS_PAGE,
   ADMIN_USERS,
   BOXES_PAGE,
+  CATEGORIES_PAGE,
   COUNTRIES_PAGE,
   HOME_PAGE,
   ITEM_PAGE,
@@ -26,11 +27,13 @@ import OwnerItems from "../Pages/ownerBoxes/OwnerItems";
 import Admins from "../Pages/admins/Admins";
 import AdminUser from "../Pages/admins/AdminUsers";
 import Single from "../Pages/items/Single";
+import Categories from "../Pages/categories/Categories";
 
 export const isAuthPages = [
   { id: 1, path: HOME_PAGE, Component: <HomePage /> },
   { id: 2, path: USERS_PAGE, Component: <UserPage /> },
   { id: 3, path: ITEM_PAGE, Component: <Items /> },
+  { id: 6, path: CATEGORIES_PAGE, Component: <Categories /> },
   { id: 4, path: USER_DETAIL, Component: <UserDetail /> },
   { id: 5, path: COUNTRIES_PAGE, Component: <Countries /> },
   { id: 7, path: SETTIGS_PAGE, Component: <Settings /> },

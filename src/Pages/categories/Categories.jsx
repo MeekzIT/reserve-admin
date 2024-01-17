@@ -138,6 +138,7 @@ const Categories = () => {
                 variant="outlined"
                 onClick={() => {
                   dispatch(delCategories(currentId));
+                  dispatch(getCategories());
                   handleCloseDelete();
                 }}
               >
@@ -256,9 +257,10 @@ const Categories = () => {
                       onClick={() => {
                         dispatch(
                           addCategories({
-                            nameHy,
+                            name: nameHy,
                           })
                         );
+                        dispatch(getCategories());
                         setOpenAdd(false);
                       }}
                     >

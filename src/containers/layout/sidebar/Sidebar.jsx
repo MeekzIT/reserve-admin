@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import {
   ADMINS_PAGE,
   BOXES_PAGE,
+  CATEGORIES_PAGE,
   COUNTRIES_PAGE,
   HOME_PAGE,
   USERS_PAGE,
@@ -28,6 +29,7 @@ const Sidebar = ({ close, setClose }) => {
   const superPages = [
     { id: 1, path: HOME_PAGE, name: t("home") },
     { id: 2, path: ADMINS_PAGE, name: t("admins") },
+    { id: 3, path: CATEGORIES_PAGE, name: t("categories") },
     { id: 3, path: COUNTRIES_PAGE, name: t("countries") },
   ];
 
