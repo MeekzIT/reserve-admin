@@ -198,5 +198,6 @@
   "expenses": "Расходы",
   "all": "входящие деньги",
   "add-modes": "Add mode",
-  "mode":"mode"
+  "mode": "mode",
+  "add-type": "Car types"
 }

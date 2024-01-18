@@ -31,7 +31,7 @@ const Sidebar = ({ close, setClose }) => {
     { id: 1, path: HOME_PAGE, name: t("home") },
     { id: 2, path: ADMINS_PAGE, name: t("admins") },
     { id: 3, path: CATEGORIES_PAGE, name: t("categories") },
-    { id: 5, path: TYPES_PAGE, name: t("types") },
+    { id: 5, path: TYPES_PAGE, name: t("add-type") },
     { id: 3, path: COUNTRIES_PAGE, name: t("countries") },
   ];
 

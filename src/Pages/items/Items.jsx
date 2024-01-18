@@ -280,7 +280,7 @@ const Items = () => {
         >
           <Box sx={styleName}>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              {t("mode")}
+              {t("add-type")}
             </Typography>
             <div
               className="mobile-modal-close-btn"
@@ -307,11 +307,11 @@ const Items = () => {
                             id: i.id,
                           })
                         );
-                        // dispatch(
-                        //   getItemType({
-                        //     id: current,
-                        //   })
-                        // );
+                        dispatch(
+                          getItemType({
+                            id: current,
+                          })
+                        );
                       }}
                     />
                   );
