@@ -67,12 +67,13 @@ export const categoryReducer = (state = initialState, action) => {
         newCategories: action.payload.newCategories,
       };
     case DEL_ITEM_CATEGORY:
-      const updatedItemCategory = state.itemCategories.map((item) =>
-        item.id === action.payload ? null : item
-      );
+      // const updatedItemCategory = state.itemCategories.map((item) =>
+      //   item.id === action.payload ? null : item
+      // );
       return {
         ...state,
-        itemCategories: updatedItemCategory,
+        itemCategories: action.payload.data,
+        newCategories: action.payload.newCategories,
       };
     case ADD_ITEM_CATEGORY:
       return {

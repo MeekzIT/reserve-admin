@@ -188,7 +188,7 @@ export const delItemCategories = (data) => {
         if (response.data.succes) {
           dispatch({
             type: DEL_ITEM_CATEGORY,
-            payload: data.id,
+            payload: response.data,
           });
           Swal.fire({
             position: "center",
