@@ -218,7 +218,7 @@ const Items = () => {
                 {itemCategories?.map((i) => {
                   return (
                     <Chip
-                      label={i?.Type?.nameEn}
+                      label={i?.Category?.nameEn}
                       variant="outlined"
                       sx={{
                         borderColor: "#008491",
@@ -227,6 +227,7 @@ const Items = () => {
                         dispatch(
                           delItemCategories({
                             id: i.id,
+                            p2: current,
                           })
                         );
                         dispatch(
@@ -305,6 +306,7 @@ const Items = () => {
                         dispatch(
                           delItemType({
                             id: i.id,
+                            p2: current,
                           })
                         );
                         dispatch(

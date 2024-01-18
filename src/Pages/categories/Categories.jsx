@@ -164,6 +164,10 @@ const Categories = () => {
         onClose={() => {
           setOpenEdit(false);
           setnameAm("");
+          setNameRu("");
+          setNameEn("");
+          setNameGe("");
+          setNameAz("");
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -370,7 +374,11 @@ const Categories = () => {
                         );
                         dispatch(getCategories());
                         setOpenAdd(false);
-                        setnameAm(null);
+                        setnameAm("");
+                        setNameRu("");
+                        setNameEn("");
+                        setNameGe("");
+                        setNameAz("");
                       }}
                     >
                       {t("add")}

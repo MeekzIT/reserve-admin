@@ -8,34 +8,27 @@ import { useIsMobile } from "../../hooks/useScreenType";
 import GoBack from "../../components/goBack/GoBack";
 import ChangeField from "../../components/changeField/ChangeField";
 import { editItemCategories } from "../../store/actions/category-action";
+import { editItemType } from "../../store/actions/type-action";
 
-const BoxSettings = ({ data }) => {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { id, owner_id, user_id } = useParams();
+const BoxSettings = ({ data, types }) => {
   const dispatch = useDispatch();
-  const isMobile = useIsMobile();
-  const location = useLocation();
-  const user = useSelector((state) => state.user.single);
-  const items = useSelector((state) => state.user.items);
-  const [changedData, setChangedData] = useState({});
 
   const handleChangeData = (name, value) => {
-    changedData[name] = value;
-    setChangedData(changedData);
+    dispatch(
+      editItemCategories({
+        id: name,
+        price: value,
+      })
+    );
   };
 
-  const handleEditData = () => {
-    const keys = Object.keys(changedData);
-    keys.map((i) =>
-      dispatch(
-        editItemCategories({
-          id: i,
-          price: changedData[i],
-        })
-      )
+  const handleChangeTypesData = (name, value) => {
+    dispatch(
+      editItemType({
+        id: name,
+        price: value,
+      })
     );
-    setChangedData({});
   };
 
   return (
@@ -49,6 +42,16 @@ const BoxSettings = ({ data }) => {
       mt={1}
       mb={1}
     >
+      {types?.map((entery) => {
+        return (
+          <ChangeField
+            value={entery.price}
+            name={entery.id}
+            handleChangeData={handleChangeTypesData}
+            title={entery?.Type?.nameEn}
+          />
+        );
+      })}
       {data?.map((entery) => {
         return (
           <ChangeField
@@ -59,9 +62,6 @@ const BoxSettings = ({ data }) => {
           />
         );
       })}
-      <Button variant="outlined" fullWidth onClick={() => handleEditData()}>
-        {t("save")}
-      </Button>
     </Box>
   );
 };

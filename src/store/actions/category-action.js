@@ -159,7 +159,7 @@ export const addItemCategories = (data) => {
         if (response.data.succes) {
           dispatch({
             type: ADD_ITEM_CATEGORY,
-            payload: response.data.id,
+            payload: response.data,
           });
           Swal.fire({
             position: "center",

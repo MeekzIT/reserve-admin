@@ -8,20 +8,14 @@ import {
   getItemSingle,
   getSingleOwners,
 } from "../../store/actions/users-action";
-import {
-  Box,
-  Button,
-  Grid,
-  Typography,
-  FormControlLabel,
-  Switch,
-} from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { compareWithUTC } from "../../hooks/helpers";
 import GoBack from "../../components/goBack/GoBack";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { getItemCategories } from "../../store/actions/category-action";
 import BoxSettings from "./BoxSettings";
+import { getItemType } from "../../store/actions/type-action";
 
 const Single = () => {
   const { t } = useTranslation();
@@ -31,12 +25,15 @@ const Single = () => {
   const isMobile = useIsMobile();
   const location = useLocation();
   const [filterOn, setFilterOn] = useState(false);
+  const [filterOnType, setFilterOnType] = useState(false);
 
   const data = useSelector((state) => state.user.singleItem);
   const isSuper = useSelector((state) => state.auth.isSuper);
   const user = useSelector((state) => state.user.single);
   const itemCategories = useSelector((state) => state.category.itemCategories);
   const newCategories = useSelector((state) => state.category.newCategories);
+  const itemTypes = useSelector((state) => state.category.itemTypes);
+  const newTypes = useSelector((state) => state.category.newTypes);
 
   useEffect(() => {
     // dispatch(getSingleUser(user_id));
@@ -44,6 +41,11 @@ const Single = () => {
     dispatch(getItemSingle(single));
     dispatch(
       getItemCategories({
+        id: single,
+      })
+    );
+    dispatch(
+      getItemType({
         id: single,
       })
     );
@@ -89,7 +91,9 @@ const Single = () => {
           {filterOn ? <VisibilityOffIcon /> : <VisibilityIcon />}
           {filterOn ? t("hide") : t("set-parametrs")}
         </Button>
-        <Box>{filterOn && <BoxSettings data={itemCategories} />} </Box>
+        <Box>
+          {filterOn && <BoxSettings data={itemCategories} types={itemTypes} />}{" "}
+        </Box>
       </Grid>
     </Box>
   );

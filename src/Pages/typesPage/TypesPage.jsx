@@ -370,7 +370,11 @@ const TypesPage = () => {
                         );
                         dispatch(getType());
                         setOpenAdd(false);
-                        setnameAm(null);
+                        setnameAm("");
+                        setNameRu("");
+                        setNameEn("");
+                        setNameGe("");
+                        setNameAz("");
                       }}
                     >
                       {t("add")}
