@@ -33,6 +33,11 @@ import {
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import BoxSettings from "./BoxSettings";
+import {
+  addItemType,
+  delItemType,
+  getItemType,
+} from "../../store/actions/type-action";
 
 const Items = () => {
   const { t } = useTranslation();
@@ -45,10 +50,13 @@ const Items = () => {
   const items = useSelector((state) => state.user.items);
   const itemCategories = useSelector((state) => state.category.itemCategories);
   const newCategories = useSelector((state) => state.category.newCategories);
+  const itemTypes = useSelector((state) => state.category.itemTypes);
+  const newTypes = useSelector((state) => state.category.newTypes);
   const [current, setCurrent] = useState(null);
   const [name, setName] = useState("");
   const [openName, setOpenName] = useState(false);
   const [openMode, setOpenMode] = useState(false);
+  const [openType, setOpenType] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
 
   const styleName = {
@@ -120,16 +128,15 @@ const Items = () => {
                         <Button
                           variant="contained"
                           onClick={() => {
-                            setCurrent(row.p2);
-                            dispatch(
-                              getItemCategories({
-                                id: row.p2,
-                              })
-                            );
-                            setOpenSettings(true);
+                            // navigate(`/admin-user/${row.id}`);
+                            navigate(`/owner/${owner_id}/item/${id}/${row.p2}`);
                           }}
                         >
-                          {t("settings")}
+                          <RemoveRedEyeIcon
+                            sx={{
+                              color: "white",
+                            }}
+                          />
                         </Button>
                       </TableCell>
 
@@ -147,6 +154,22 @@ const Items = () => {
                           }}
                         >
                           {t("add-modes")}
+                        </Button>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            setCurrent(row.p2);
+                            dispatch(
+                              getItemType({
+                                id: row.p2,
+                              })
+                            );
+                            setOpenType(true);
+                          }}
+                        >
+                          {t("add-type")}
                         </Button>
                       </TableCell>
                       <TableCell align="left">
@@ -195,7 +218,7 @@ const Items = () => {
                 {itemCategories?.map((i) => {
                   return (
                     <Chip
-                      label={i?.Category?.name}
+                      label={i?.Type?.nameEn}
                       variant="outlined"
                       sx={{
                         borderColor: "#008491",
@@ -228,7 +251,7 @@ const Items = () => {
                 {newCategories?.map((i) => {
                   return (
                     <Chip
-                      label={i.name}
+                      label={i.nameEn}
                       sx={{
                         cursor: "pointer",
                         borderColor: "#008491",
@@ -239,6 +262,84 @@ const Items = () => {
                           addItemCategories({
                             id: current,
                             modeId: i.id,
+                          })
+                        )
+                      }
+                    />
+                  );
+                })}
+              </Stack>
+            </Box>
+          </Box>
+        </Modal>
+        <Modal
+          open={openType}
+          onClose={() => {
+            setOpenType(false);
+          }}
+        >
+          <Box sx={styleName}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {t("mode")}
+            </Typography>
+            <div
+              className="mobile-modal-close-btn"
+              onClick={() => {
+                setOpenType(false);
+              }}
+            >
+              <CloseIcon fontSize="large" />
+            </div>
+
+            <Box mt={2}>
+              <Stack direction="row" spacing={1}>
+                {itemTypes?.map((i) => {
+                  return (
+                    <Chip
+                      label={i?.Type?.nameEn}
+                      variant="outlined"
+                      sx={{
+                        borderColor: "#008491",
+                      }}
+                      onDelete={() => {
+                        dispatch(
+                          delItemType({
+                            id: i.id,
+                          })
+                        );
+                        // dispatch(
+                        //   getItemType({
+                        //     id: current,
+                        //   })
+                        // );
+                      }}
+                    />
+                  );
+                })}
+              </Stack>
+              <hr />
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{
+                  flexWrap: "wrap",
+                  gap: "10px",
+                }}
+              >
+                {newTypes?.map((i) => {
+                  return (
+                    <Chip
+                      label={i.nameEn}
+                      sx={{
+                        cursor: "pointer",
+                        borderColor: "#008491",
+                      }}
+                      variant="outlined"
+                      onClick={() =>
+                        dispatch(
+                          addItemType({
+                            id: current,
+                            typeId: i.id,
                           })
                         )
                       }
@@ -288,7 +389,6 @@ const Items = () => {
             </Box>
           </Box>
         </Modal>
-
         <Modal
           open={openSettings}
           onClose={() => {

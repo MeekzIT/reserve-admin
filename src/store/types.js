@@ -53,3 +53,12 @@ export const GET_BOX_LINEAR = "GET_BOX_LINEAR";
 export const GET_ITEM_CATEGORY = "GET_ITEM_CATEGORY";
 export const ADD_ITEM_CATEGORY = "ADD_ITEM_CATEGORY";
 export const DEL_ITEM_CATEGORY = "DEL_ITEM_CATEGORY";
+
+export const GET_TYPE = "GET_TYPE";
+export const DEL_TYPE = "DEL_TYPE";
+export const EDIT_TYPE = "EDIT_TYPE";
+export const ADD_TYPE = "ADD_TYPE";
+
+export const GET_ITEM_TYPE = "GET_ITEM_TYPE";
+export const ADD_ITEM_TYPE = "ADD_ITEM_TYPE";
+export const DEL_ITEM_TYPE = "DEL_ITEM_TYPE";

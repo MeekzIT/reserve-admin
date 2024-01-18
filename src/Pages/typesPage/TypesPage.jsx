@@ -13,19 +13,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import {
-  addCategories,
-  delCategories,
-  editCategories,
-  getCategories,
-} from "../../store/actions/category-action";
+  addType,
+  delType,
+  editType,
+  getType,
+} from "../../store/actions/type-action";
 import CloseIcon from "@mui/icons-material/Close";
 import { useIsMobile } from "../../hooks/useScreenType";
 
-const Categories = () => {
+const TypesPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const isMobile = useIsMobile();
-  const data = useSelector((state) => state.category.categories);
+  const data = useSelector((state) => state.category.type);
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openAdd, setOpenAdd] = useState(false);
@@ -55,12 +55,12 @@ const Categories = () => {
     gap: isMobile && "20px",
   };
   useEffect(() => {
-    dispatch(getCategories());
+    dispatch(getType());
   }, []);
   return (
     <Box m={3}>
       <Box>
-        <h2> {t("categories")}</h2>
+        <h2> {t("types")}</h2>
       </Box>
       <Box mb={3}>
         <Button variant="contained" onClick={() => setOpenAdd(true)}>
@@ -148,8 +148,8 @@ const Categories = () => {
               <Button
                 variant="outlined"
                 onClick={() => {
-                  dispatch(delCategories(currentId));
-                  dispatch(getCategories());
+                  dispatch(delType(currentId));
+                  dispatch(getType());
                   handleCloseDelete();
                 }}
               >
@@ -244,7 +244,7 @@ const Categories = () => {
                       sx={{ color: "white" }}
                       onClick={() => {
                         dispatch(
-                          editCategories(
+                          editType(
                             currentId,
                             nameAm,
                             nameRu,
@@ -360,7 +360,7 @@ const Categories = () => {
                       sx={{ color: "white" }}
                       onClick={() => {
                         dispatch(
-                          addCategories({
+                          addType({
                             nameAm,
                             nameRu,
                             nameEn,
@@ -368,7 +368,7 @@ const Categories = () => {
                             nameAz,
                           })
                         );
-                        dispatch(getCategories());
+                        dispatch(getType());
                         setOpenAdd(false);
                         setnameAm(null);
                       }}
@@ -386,4 +386,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default TypesPage;

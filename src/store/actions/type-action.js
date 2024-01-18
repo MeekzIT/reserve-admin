@@ -1,27 +1,31 @@
 import axios from "axios";
 import {
-  ADD_ITEM_CATEGORY,
+  ADD_ITEM_TYPE,
+  ADD_TYPE,
   DEL_CATEGORIES,
-  DEL_ITEM_CATEGORY,
+  DEL_ITEM_TYPE,
+  DEL_TYPE,
+  EDIT_TYPE,
   GET_CATEGORIES,
-  GET_ITEM_CATEGORY,
+  GET_ITEM_TYPE,
+  GET_TYPE,
 } from "../types";
 import { keys } from "../../keys";
 import { EDIR_CATEGORIES } from "../types";
 import { ADD_CATEGORIES } from "../types";
 import Swal from "sweetalert2";
 
-export const getCategories = () => {
+export const getType = () => {
   return (dispatch) => {
     axios
-      .get(`${keys.api}/category`, {
+      .get(`${keys.api}/type`, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
       })
       .then((response) => {
         dispatch({
-          type: GET_CATEGORIES,
+          type: GET_TYPE,
           payload: response.data,
         });
       })
@@ -31,11 +35,11 @@ export const getCategories = () => {
   };
 };
 
-export const delCategories = (id) => {
+export const delType = (id) => {
   return (dispatch) => {
     axios
       .post(
-        `${keys.api}/category/del`,
+        `${keys.api}/type/del`,
         { id },
         {
           headers: {
@@ -46,7 +50,7 @@ export const delCategories = (id) => {
       .then((response) => {
         if (response.data.succes) {
           dispatch({
-            type: DEL_CATEGORIES,
+            type: DEL_TYPE,
             payload: id,
           });
           Swal.fire({
@@ -64,11 +68,11 @@ export const delCategories = (id) => {
   };
 };
 
-export const editCategories = (id, nameAm, nameRu, nameEn, nameGe, nameAz) => {
+export const editType = (id, nameAm, nameRu, nameEn, nameGe, nameAz) => {
   return (dispatch) => {
     axios
       .post(
-        `${keys.api}/category/edit`,
+        `${keys.api}/type/edit`,
         { id, nameAm, nameRu, nameEn, nameGe, nameAz },
         {
           headers: {
@@ -79,7 +83,7 @@ export const editCategories = (id, nameAm, nameRu, nameEn, nameGe, nameAz) => {
       .then((response) => {
         if (response.data.succes) {
           dispatch({
-            type: EDIR_CATEGORIES,
+            type: EDIT_TYPE,
             payload: { id, nameAm, nameRu, nameEn, nameGe, nameAz },
           });
           Swal.fire({
@@ -97,10 +101,10 @@ export const editCategories = (id, nameAm, nameRu, nameEn, nameGe, nameAz) => {
   };
 };
 
-export const addCategories = (data) => {
+export const addType = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/category/create`, data, {
+      .post(`${keys.api}/type/create`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
@@ -108,7 +112,7 @@ export const addCategories = (data) => {
       .then((response) => {
         if (response.data.succes) {
           dispatch({
-            type: ADD_CATEGORIES,
+            type: ADD_TYPE,
             payload: { ...data, id: 99 },
           });
           Swal.fire({
@@ -126,10 +130,10 @@ export const addCategories = (data) => {
   };
 };
 
-export const getItemCategories = (data) => {
+export const getItemType = (data) => {
   return (dispatch) => {
     axios
-      .get(`${keys.api}/item/mode`, {
+      .get(`${keys.api}/item/type`, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
@@ -137,7 +141,7 @@ export const getItemCategories = (data) => {
       })
       .then((response) => {
         dispatch({
-          type: GET_ITEM_CATEGORY,
+          type: GET_ITEM_TYPE,
           payload: response.data,
         });
       })
@@ -147,10 +151,10 @@ export const getItemCategories = (data) => {
   };
 };
 
-export const addItemCategories = (data) => {
+export const addItemType = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/item/add-mode`, data, {
+      .post(`${keys.api}/item/add-type`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
@@ -158,8 +162,8 @@ export const addItemCategories = (data) => {
       .then((response) => {
         if (response.data.succes) {
           dispatch({
-            type: ADD_ITEM_CATEGORY,
-            payload: response.data.id,
+            type: ADD_ITEM_TYPE,
+            payload: response.data,
           });
           Swal.fire({
             position: "center",
@@ -176,10 +180,10 @@ export const addItemCategories = (data) => {
   };
 };
 
-export const delItemCategories = (data) => {
+export const delItemType = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/item/destroy-mode`, data, {
+      .post(`${keys.api}/item/destroy-type`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
@@ -187,8 +191,8 @@ export const delItemCategories = (data) => {
       .then((response) => {
         if (response.data.succes) {
           dispatch({
-            type: DEL_ITEM_CATEGORY,
-            payload: data.id,
+            type: DEL_ITEM_TYPE,
+            payload: response.data,
           });
           Swal.fire({
             position: "center",
@@ -205,10 +209,10 @@ export const delItemCategories = (data) => {
   };
 };
 
-export const editItemCategories = (data) => {
+export const editItemType = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/item/edit-mode`, data, {
+      .post(`${keys.api}/item/edit-type`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },

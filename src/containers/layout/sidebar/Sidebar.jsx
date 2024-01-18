@@ -8,6 +8,7 @@ import {
   CATEGORIES_PAGE,
   COUNTRIES_PAGE,
   HOME_PAGE,
+  TYPES_PAGE,
   USERS_PAGE,
 } from "../../../routing/pats";
 import { useTranslation } from "react-i18next";
@@ -30,6 +31,7 @@ const Sidebar = ({ close, setClose }) => {
     { id: 1, path: HOME_PAGE, name: t("home") },
     { id: 2, path: ADMINS_PAGE, name: t("admins") },
     { id: 3, path: CATEGORIES_PAGE, name: t("categories") },
+    { id: 5, path: TYPES_PAGE, name: t("types") },
     { id: 3, path: COUNTRIES_PAGE, name: t("countries") },
   ];
 

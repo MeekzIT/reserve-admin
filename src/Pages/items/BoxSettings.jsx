@@ -51,16 +51,11 @@ const BoxSettings = ({ data }) => {
     >
       {data?.map((entery) => {
         return (
-          //   <TextField
-          //     id="outlined-basic"
-          //     label={entery?.Category?.name}
-          //     variant="outlined"
-          //   />
           <ChangeField
             value={entery.price}
             name={entery.id}
             handleChangeData={handleChangeData}
-            title={entery?.Category?.name}
+            title={entery?.Category?.nameEn}
           />
         );
       })}
