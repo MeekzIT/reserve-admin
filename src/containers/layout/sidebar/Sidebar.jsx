@@ -8,6 +8,7 @@ import {
   CATEGORIES_PAGE,
   COUNTRIES_PAGE,
   HOME_PAGE,
+  SUPORT_PAGE,
   TYPES_PAGE,
   USERS_PAGE,
 } from "../../../routing/pats";
@@ -31,13 +32,14 @@ const Sidebar = ({ close, setClose }) => {
     { id: 1, path: HOME_PAGE, name: t("home") },
     { id: 2, path: ADMINS_PAGE, name: t("admins") },
     { id: 3, path: CATEGORIES_PAGE, name: t("categories") },
-    { id: 5, path: TYPES_PAGE, name: t("add-type") },
-    { id: 3, path: COUNTRIES_PAGE, name: t("countries") },
+    { id: 4, path: TYPES_PAGE, name: t("add-type") },
+    { id: 5, path: COUNTRIES_PAGE, name: t("countries") },
   ];
 
   const pages = [
     { id: 1, path: HOME_PAGE, name: t("home") },
     { id: 2, path: USERS_PAGE, name: t("users") },
+    { id: 3, path: SUPORT_PAGE, name: t("suport") },
   ];
 
   const technicianPages = [

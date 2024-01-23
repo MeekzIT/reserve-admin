@@ -12,6 +12,7 @@ import {
   OWNERS_BOXES,
   OWNER_ITEMS_PAGE,
   SETTIGS_PAGE,
+  SUPORT_PAGE,
   TYPES_PAGE,
   USERS_PAGE,
   USER_DETAIL,
@@ -30,22 +31,24 @@ import AdminUser from "../Pages/admins/AdminUsers";
 import Categories from "../Pages/categories/Categories";
 import Single from "../Pages/items/Single";
 import TypesPage from "../Pages/typesPage/TypesPage";
+import Suport from "../Pages/suport/Suport";
 
 export const isAuthPages = [
   { id: 1, path: HOME_PAGE, Component: <HomePage /> },
   { id: 2, path: USERS_PAGE, Component: <UserPage /> },
   { id: 3, path: ITEM_PAGE, Component: <Items /> },
-  { id: 6, path: CATEGORIES_PAGE, Component: <Categories /> },
-  { id: 66, path: TYPES_PAGE, Component: <TypesPage /> },
-  { id: 4, path: USER_DETAIL, Component: <UserDetail /> },
-  { id: 5, path: COUNTRIES_PAGE, Component: <Countries /> },
-  { id: 15, path: ITEM_SINGLE_PAGE, Component: <Single /> },
-  { id: 7, path: SETTIGS_PAGE, Component: <Settings /> },
-  { id: 9, path: OWNERS_BOXES, Component: <Boxes /> },
-  { id: 10, path: BOXES_PAGE, Component: <OwnerBoxes /> },
-  { id: 11, path: OWNER_ITEMS_PAGE, Component: <OwnerItems /> },
-  { id: 12, path: ADMINS_PAGE, Component: <Admins /> },
+  { id: 4, path: CATEGORIES_PAGE, Component: <Categories /> },
+  { id: 5, path: TYPES_PAGE, Component: <TypesPage /> },
+  { id: 6, path: USER_DETAIL, Component: <UserDetail /> },
+  { id: 7, path: COUNTRIES_PAGE, Component: <Countries /> },
+  { id: 8, path: ITEM_SINGLE_PAGE, Component: <Single /> },
+  { id: 9, path: SETTIGS_PAGE, Component: <Settings /> },
+  { id: 10, path: OWNERS_BOXES, Component: <Boxes /> },
+  { id: 11, path: BOXES_PAGE, Component: <OwnerBoxes /> },
+  { id: 12, path: OWNER_ITEMS_PAGE, Component: <OwnerItems /> },
+  { id: 13, path: ADMINS_PAGE, Component: <Admins /> },
   { id: 14, path: ADMIN_USERS, Component: <AdminUser /> },
+  { id: 15, path: SUPORT_PAGE, Component: <Suport /> },
 ];
 
 export const notAuthPages = [{ id: 2, path: LOGIN_PAGE, Component: LoginPage }];
