@@ -36,7 +36,7 @@ import Swal from "sweetalert2";
 export const getUsers = (page, adminId) => {
   return (dispatch) => {
     axios
-      .get(`${keys.api}/users/`, {
+      .get(`${keys.api}/tech/`, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
@@ -60,7 +60,7 @@ export const getUsers = (page, adminId) => {
 export const addUsers = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/users/create`, data, {
+      .post(`${keys.api}/tech/create`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
@@ -82,7 +82,7 @@ export const addUsers = (data) => {
 export const getSingleUser = (id) => {
   return (dispatch) => {
     axios
-      .get(`${keys.api}/users/single`, {
+      .get(`${keys.api}/tech/single`, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },

@@ -1,43 +1,50 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import BoxSettings from "./BoxSettings";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import GoBack from "../../components/goBack/GoBack";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { useEffect, useState } from "react";
+import { useIsMobile } from "../../hooks/useScreenType";
+import { compareWithUTC } from "../../hooks/helpers";
+import {
+  Box,
+  Button,
+  Modal,
+  TextField,
+  Typography,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+  Chip,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import {
   getBoxes,
   getSingleOwners,
   getSingleUser,
   changeName,
 } from "../../store/actions/users-action";
-import { useIsMobile } from "../../hooks/useScreenType";
-import { compareWithUTC } from "../../hooks/helpers";
-import CircleIcon from "@mui/icons-material/Circle";
-import CloseIcon from "@mui/icons-material/Close";
-import GoBack from "../../components/goBack/GoBack";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import {
   addItemCategories,
   delItemCategories,
   getItemCategories,
 } from "../../store/actions/category-action";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import BoxSettings from "./BoxSettings";
 import {
   addItemType,
   delItemType,
   getItemType,
 } from "../../store/actions/type-action";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import CircleIcon from "@mui/icons-material/Circle";
+import CloseIcon from "@mui/icons-material/Close";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 
 const Items = () => {
   const { t } = useTranslation();
@@ -54,6 +61,7 @@ const Items = () => {
   const newTypes = useSelector((state) => state.category.newTypes);
   const [current, setCurrent] = useState(null);
   const [name, setName] = useState("");
+  const [access, setAccess] = useState();
   const [openName, setOpenName] = useState(false);
   const [openMode, setOpenMode] = useState(false);
   const [openType, setOpenType] = useState(false);
@@ -80,7 +88,7 @@ const Items = () => {
   useEffect(() => {
     dispatch(getSingleUser(user_id));
     dispatch(getBoxes(owner_id, id));
-  }, []);
+  }, [openName]);
 
   useEffect(() => {
     user && dispatch(getSingleOwners(id));
@@ -119,6 +127,13 @@ const Items = () => {
                           <span className="offline">
                             <CircleIcon />
                           </span>
+                        )}
+                        {row.access ? (
+                          <CheckBoxIcon sx={{ color: "primary.main" }} />
+                        ) : (
+                          <IndeterminateCheckBoxIcon
+                            sx={{ color: "primary.main" }}
+                          />
                         )}
                       </TableCell>
                       <TableCell>
@@ -178,6 +193,7 @@ const Items = () => {
                           onClick={() => {
                             setCurrent(row.p2);
                             setName(row.name);
+                            setAccess(row.access);
                             setOpenName(true);
                           }}
                         >
@@ -376,13 +392,27 @@ const Items = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </Box>
+            <Box>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={access}
+                      onChange={(e) => setAccess(e.target.checked)}
+                    />
+                  }
+                  label="Disable Reserve"
+                />
+              </FormGroup>
+            </Box>
             <Box mt={2}>
               <Button
                 variant="contained"
                 onClick={() => {
-                  dispatch(changeName({ name, id: current }));
+                  dispatch(changeName({ name, id: current, access }));
                   dispatch(getBoxes(owner_id, id));
                   setName("");
+                  setAccess();
                   setOpenName(false);
                 }}
               >
