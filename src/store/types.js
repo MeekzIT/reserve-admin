@@ -62,3 +62,7 @@ export const ADD_TYPE = "ADD_TYPE";
 export const GET_ITEM_TYPE = "GET_ITEM_TYPE";
 export const ADD_ITEM_TYPE = "ADD_ITEM_TYPE";
 export const DEL_ITEM_TYPE = "DEL_ITEM_TYPE";
+
+export const ACTIVE_SUPORT = "ACTIVE_SUPORT";
+export const SUPORT_HISTORY = "SUPORT_HISTORY";
+export const DELETE_SUPORT = "DELETE_SUPORT";
