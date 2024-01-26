@@ -45,6 +45,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
+import { getWord } from "../../hooks/useWord";
 
 const Items = () => {
   const { t } = useTranslation();
@@ -234,7 +235,7 @@ const Items = () => {
                 {itemCategories?.map((i) => {
                   return (
                     <Chip
-                      label={i?.Category?.nameEn}
+                      label={getWord(i?.Category)}
                       variant="outlined"
                       sx={{
                         borderColor: "#008491",
@@ -268,7 +269,7 @@ const Items = () => {
                 {newCategories?.map((i) => {
                   return (
                     <Chip
-                      label={i.nameEn}
+                      label={getWord(i)}
                       sx={{
                         cursor: "pointer",
                         borderColor: "#008491",
@@ -313,7 +314,7 @@ const Items = () => {
                 {itemTypes?.map((i) => {
                   return (
                     <Chip
-                      label={i?.Type?.nameEn}
+                      label={getWord(i?.Type)}
                       variant="outlined"
                       sx={{
                         borderColor: "#008491",
@@ -347,7 +348,7 @@ const Items = () => {
                 {newTypes?.map((i) => {
                   return (
                     <Chip
-                      label={i.nameEn}
+                      label={getWord(i)}
                       sx={{
                         cursor: "pointer",
                         borderColor: "#008491",
@@ -401,7 +402,7 @@ const Items = () => {
                       onChange={(e) => setAccess(e.target.checked)}
                     />
                   }
-                  label="Disable Reserve"
+                  label={access ? "Reserve Mode On, Off?" : "On Reserve"}
                 />
               </FormGroup>
             </Box>
