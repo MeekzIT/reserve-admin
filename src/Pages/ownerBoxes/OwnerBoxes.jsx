@@ -7,7 +7,6 @@ import {
   changeBoxSettings,
   getBoxes,
   getSingleBox,
-  getBoxInfo,
 } from "../../store/actions/users-action";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -49,11 +48,7 @@ const OwnerBoxes = () => {
   }, []);
   useEffect(() => {
     dispatch(getBoxes(owner?.deviceOwner));
-    dispatch(
-      getBoxInfo({
-        ownerId: owner?.deviceOwner,
-      })
-    );
+   
   }, [owner]);
   return (
     <div>

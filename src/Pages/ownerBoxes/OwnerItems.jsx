@@ -19,9 +19,7 @@ import { USERS_PAGE, ADMINS_PAGE, BOXES_PAGE } from "../../routing/pats";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-  getBoxLinear,
   getBoxes,
-  getSingleBoxInfo,
   getSingleOwners,
   getSingleUser,
 } from "../../store/actions/users-action";
@@ -55,7 +53,6 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PaymentIcon from "@mui/icons-material/Payment";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import dayjs from "dayjs";
-import GenerateModal from "../../components/generateModal/GenerateModal";
 
 const Items = () => {
   const { t } = useTranslation();
@@ -104,30 +101,7 @@ const Items = () => {
     gap: isMobile && "20px",
   };
   useEffect(() => {
-    dispatch(
-      getSingleBoxInfo({
-        ownerId: id,
-        boxId: box_id,
-        date: dountDate,
-        endDate: dountDate2,
-      })
-    );
-    if (!dountDate || !dountDate2) {
-      dispatch(
-        getBoxLinear({
-          ownerId: id,
-          date: selectedDate,
-        })
-      );
-    } else {
-      dispatch(
-        getBoxLinear({
-          ownerId: id,
-          date: dountDate,
-          endDate: dountDate2,
-        })
-      );
-    }
+
     // dispatch(getSingleUser(user_id));
     dispatch(getBoxes(id, box_id));
   }, []);
@@ -491,11 +465,6 @@ const Items = () => {
           </Box>
         </Modal>
       </div>
-      <GenerateModal
-        open={openGenerate}
-        setOpen={setOpenGenerate}
-        ownerId={id}
-      />
     </div>
   );
 };

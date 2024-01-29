@@ -20,7 +20,6 @@ export const GET_SINGLE_OWNER = "GET_SINGLE_OWNER";
 export const GET_SINGLE_BOX = "GET_SINGLE_BOX";
 export const ADD_OWNER = "ADD_OWNER";
 export const GET_BOXES = "GET_BOXES";
-export const EDIT_ITEM = "EDIT_ITEM";
 export const GET_INFO = "GET_INFO";
 export const GET_CALC_INFO = "GET_CALC_INFO";
 export const GET_CALC_INFO2 = "GET_CALC_INFO2";
@@ -66,3 +65,6 @@ export const DEL_ITEM_TYPE = "DEL_ITEM_TYPE";
 export const ACTIVE_SUPORT = "ACTIVE_SUPORT";
 export const SUPORT_HISTORY = "SUPORT_HISTORY";
 export const DELETE_SUPORT = "DELETE_SUPORT";
+
+export const GET_WORKERS = "GET_WORKERS";
+export const ADD_WORKER = "ADD_WORKER"
