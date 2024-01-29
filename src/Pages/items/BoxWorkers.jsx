@@ -1,5 +1,10 @@
 import { useState } from "react";
 import * as Yup from "yup";
+import dayjs from "dayjs";
+import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { useParams } from "react-router-dom";
 import useCopyToClipboard from "../../hooks/useCopyToClipboard";
 import { generatePassword } from "../../hooks/generatePassword";
@@ -58,23 +63,28 @@ const BoxWorkers = () => {
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Required"),
+    startHour: Yup.string().required("Required"),
+    endHour: Yup.string().required("Required"),
   });
   const resetSchema = Yup.object().shape({
     password: Yup.string()
       .min(8, "Password must be at least 8 characters")
       .required("Required"),
+    startHour: Yup.string().required("Required"),
+    endHour: Yup.string().required("Required"),
   });
   const initialValuesReset = {
-    firstName: "",
-    lastName: "",
-    email: "",
     password: "",
+    startHour: "",
+    endHour: "",
   };
   const initialValues = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
+    startHour: "",
+    endHour: "",
   };
   const style = {
     position: "absolute",
@@ -117,7 +127,7 @@ const BoxWorkers = () => {
                       <TableCell>{t("name")}</TableCell>
                       <TableCell align="left">{t("activity")}</TableCell>
                       <TableCell align="left">{t("email")}</TableCell>
-                      <TableCell align="left">{t("reset")}</TableCell>
+                      <TableCell align="left">{t("edit")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -228,6 +238,42 @@ const BoxWorkers = () => {
                       />
                     </Grid>
                     <Grid item xs={12}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem label="Worker start time">
+                          <MobileTimePicker
+                            ampm={false}
+                            name="startHour"
+                            value={values.startHour}
+                            defaultValue={dayjs("2022-04-17T10:00")}
+                            onChange={(date) =>
+                              setFieldValue("startHour", date.format("HH:mm"))
+                            }
+                          />
+                        </DemoItem>
+                      </LocalizationProvider>
+                      {touched.startTime && errors.startTime && (
+                        <div>{errors.startTime}</div>
+                      )}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem label="Worker end time">
+                          <MobileTimePicker
+                            ampm={false}
+                            name="endHour"
+                            value={values.endHour}
+                            defaultValue={dayjs("2022-04-17T21:00")}
+                            onChange={(date) =>
+                              setFieldValue("endHour", date.format("HH:mm"))
+                            }
+                          />
+                        </DemoItem>
+                      </LocalizationProvider>
+                      {touched.endTime && errors.endTime && (
+                        <div>{errors.endTime}</div>
+                      )}
+                    </Grid>
+                    <Grid item xs={12}>
                       <Field
                         as={TextField}
                         name="password"
@@ -293,7 +339,7 @@ const BoxWorkers = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Reset Worker Password
+            {"edit"}
           </Typography>
           <div
             className="mobile-modal-close-btn"
@@ -309,7 +355,7 @@ const BoxWorkers = () => {
               validationSchema={resetSchema}
               onSubmit={(values) => {
                 dispatch(resetWorkerPassword({ ...values, id: current }));
-                setOpenAdd(false);
+                setOpenReset(false);
               }}
             >
               {({
@@ -322,6 +368,42 @@ const BoxWorkers = () => {
               }) => (
                 <Form style={{ padding: "10px" }}>
                   <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem label="Worker start time">
+                          <MobileTimePicker
+                            ampm={false}
+                            name="startHour"
+                            value={values.startHour}
+                            defaultValue={dayjs("2022-04-17T10:00")}
+                            onChange={(date) =>
+                              setFieldValue("startHour", date.format("HH:mm"))
+                            }
+                          />
+                        </DemoItem>
+                      </LocalizationProvider>
+                      {touched.startTime && errors.startTime && (
+                        <div>{errors.startTime}</div>
+                      )}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoItem label="Worker end time">
+                          <MobileTimePicker
+                            ampm={false}
+                            name="endHour"
+                            value={values.endHour}
+                            defaultValue={dayjs("2022-04-17T21:00")}
+                            onChange={(date) =>
+                              setFieldValue("endHour", date.format("HH:mm"))
+                            }
+                          />
+                        </DemoItem>
+                      </LocalizationProvider>
+                      {touched.endTime && errors.endTime && (
+                        <div>{errors.endTime}</div>
+                      )}
+                    </Grid>
                     <Grid item xs={12}>
                       <Field
                         as={TextField}

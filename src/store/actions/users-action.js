@@ -362,17 +362,13 @@ export const addWorker = (data) => {
 export const resetWorkerPassword = (data) => {
   return (dispatch) => {
     axios
-      .post(`${keys.api}/worker/reset`, data, {
+      .post(`${keys.api}/worker/edit`, data, {
         headers: {
           Authorization: `Bearer ${keys.token}`,
         },
       })
       .then((response) => {
         if (response.data.succes) {
-          dispatch({
-            type: ADD_WORKER,
-            payload: response.data.data,
-          });
         }
       })
       .catch((error) => {

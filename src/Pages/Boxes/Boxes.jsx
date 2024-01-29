@@ -42,6 +42,7 @@ const Boxes = () => {
   const [currentId, setCurrentId] = useState(null);
   const [name, setName] = useState(null);
   const [geo, setGeo] = useState(null);
+  const [interval, setInterval] = useState(null);
   const [openAdd, setOpenAdd] = useState(false);
   const [pinCoordinates, setPinCoordinates] = useState([40.18111, 44.51361]); // Initial coordinates
 
@@ -163,9 +164,8 @@ const Boxes = () => {
                             setName(row.name);
                             setGeo(row.desc);
                             setPinCoordinates([row.lat, row.lng]);
-
+                            setInterval(row.interval);
                             setCurrentId(row.id);
-
                             setOpen(true);
                           }}
                         >
@@ -248,6 +248,15 @@ const Boxes = () => {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  label={t("desc")}
+                  variant="outlined"
+                  fullWidth
+                  value={interval}
+                  onChange={(e) => setInterval(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <YMaps>
                   <Map
                     defaultState={{ center: pinCoordinates, zoom: 12 }}
@@ -289,6 +298,7 @@ const Boxes = () => {
                             id: currentId,
                             name,
                             desc: geo,
+                            interval,
                             lat: pinCoordinates[0],
                             lng: pinCoordinates[1],
                           })
@@ -343,6 +353,15 @@ const Boxes = () => {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  label={t("interval")}
+                  variant="outlined"
+                  fullWidth
+                  value={interval}
+                  onChange={(e) => setInterval(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <YMaps>
                   <Map
                     defaultState={{ center: pinCoordinates, zoom: 12 }}
@@ -387,6 +406,7 @@ const Boxes = () => {
                             ownerId: id,
                             name,
                             desc: geo,
+                            interval,
                             lat: pinCoordinates[0],
                             lng: pinCoordinates[1],
                           })
