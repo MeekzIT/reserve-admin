@@ -14,6 +14,7 @@ import {
   DESTSROY_BOX,
   GET_WORKERS,
   ADD_WORKER,
+  DLE_WORKER,
 } from "../types";
 
 const initialState = {
@@ -110,6 +111,14 @@ export const userReducer = (state = initialState, action) => {
       return { ...state, workers: action.payload };
     case ADD_WORKER:
       return { ...state, workers: [...state.workers, action.payload] };
+    case DLE_WORKER:
+      const editedWorklers = state.workers.filter(
+        (i) => i.id !== action.payload
+      );
+      return {
+        ...state,
+        workers: editedWorklers,
+      };
     default:
       return state;
   }

@@ -1,6 +1,5 @@
 export const getWord = (data) => {
   const language = localStorage.getItem("language");
-  console.log(language, data, "languagelanguage");
   if (language === "am") {
     return data?.nameAm;
   } else if (language === "ru") {

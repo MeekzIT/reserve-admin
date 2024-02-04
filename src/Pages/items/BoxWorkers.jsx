@@ -9,9 +9,11 @@ import { useParams } from "react-router-dom";
 import useCopyToClipboard from "../../hooks/useCopyToClipboard";
 import { generatePassword } from "../../hooks/generatePassword";
 import { useTranslation } from "react-i18next";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsMobile } from "../../hooks/useScreenType";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 import {
   Box,
   Button,
@@ -36,6 +38,7 @@ import LockResetIcon from "@mui/icons-material/LockReset";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   addWorker,
+  destroyWorker,
   resetWorkerPassword,
 } from "../../store/actions/users-action";
 
@@ -47,6 +50,7 @@ const BoxWorkers = () => {
   const data = useSelector((state) => state.user.workers);
   const [openAdd, setOpenAdd] = useState(false);
   const [openReset, setOpenReset] = useState(false);
+  const [openDel, setOpenDel] = useState(false);
   const [current, setCurrent] = useState(false);
   const [isCopied, copyToClipboard] = useCopyToClipboard();
 
@@ -128,6 +132,7 @@ const BoxWorkers = () => {
                       <TableCell align="left">{t("activity")}</TableCell>
                       <TableCell align="left">{t("email")}</TableCell>
                       <TableCell align="left">{t("edit")}</TableCell>
+                      <TableCell align="left">{t("delete")}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -156,6 +161,18 @@ const BoxWorkers = () => {
                             }}
                           >
                             <LockResetIcon />
+                          </Button>
+                        </TableCell>
+                        <TableCell align="left">
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => {
+                              setCurrent(row.id);
+                              setOpenDel(true);
+                            }}
+                          >
+                            <DeleteIcon />
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -460,6 +477,44 @@ const BoxWorkers = () => {
               )}
             </Formik>
           </Box>
+        </Box>
+      </Modal>
+      <Modal
+        open={openDel}
+        onClose={() => setOpenDel(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            {t("delete")} ?
+          </Typography>
+          <Typography
+            className="btnsBox"
+            id="modal-modal-description"
+            sx={{ mt: 2 }}
+          >
+            <div>
+              <Button
+                variant="contained"
+                onClick={() => setOpenDel(false)}
+                sx={{ color: "white" }}
+              >
+                No
+              </Button>
+            </div>
+            <div>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  dispatch(destroyWorker({ id: current }));
+                  setOpenDel(false);
+                }}
+              >
+                Yes
+              </Button>
+            </div>
+          </Typography>
         </Box>
       </Modal>
     </Box>

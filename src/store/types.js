@@ -67,4 +67,5 @@ export const SUPORT_HISTORY = "SUPORT_HISTORY";
 export const DELETE_SUPORT = "DELETE_SUPORT";
 
 export const GET_WORKERS = "GET_WORKERS";
-export const ADD_WORKER = "ADD_WORKER"
+export const ADD_WORKER = "ADD_WORKER";
+export const DLE_WORKER = "DLE_WORKER";
