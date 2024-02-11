@@ -69,3 +69,7 @@ export const DELETE_SUPORT = "DELETE_SUPORT";
 export const GET_WORKERS = "GET_WORKERS";
 export const ADD_WORKER = "ADD_WORKER";
 export const DLE_WORKER = "DLE_WORKER";
+
+export const ADD_BOX_IMAGE = "ADD_BOX_IMAGE"
+export const GET_BOX_IMAGE = "GET_BOX_IMAGE"
+export const DESTROY_BOX_IMAGE = "DESTROY_BOX_IMAGE"

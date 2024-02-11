@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import BoxSettings from "./BoxSettings";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -44,11 +43,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import IndeterminateCheckBoxIcon from "@mui/icons-material/IndeterminateCheckBox";
 import { getWord } from "../../hooks/useWord";
+import BoxSettings from "../items/BoxSettings";
 
 const ItemDetail = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { id, owner_id, user_id } = useParams();
+  const { id, box_id } = useParams();
   const dispatch = useDispatch();
   const isMobile = useIsMobile();
   const user = useSelector((state) => state.user.single);
@@ -84,12 +84,11 @@ const ItemDetail = () => {
     gap: isMobile && "20px",
   };
   useEffect(() => {
-    dispatch(getSingleUser(user_id));
-    dispatch(getBoxes(owner_id, id));
+    dispatch(getBoxes(id, box_id));
   }, [openName]);
 
   useEffect(() => {
-    user && dispatch(getSingleOwners({ id }));
+    user && dispatch(getSingleOwners({ box_id }));
   }, [user]);
   return (
     <div>
@@ -129,7 +128,7 @@ const ItemDetail = () => {
                           variant="contained"
                           onClick={() => {
                             // navigate(`/admin-user/${row.id}`);
-                            navigate(`/owner/${owner_id}/item/${id}/${row.p2}`);
+                            navigate(`/owner/${box_id}/item/${id}/${row.p2}`);
                           }}
                         >
                           <RemoveRedEyeIcon
@@ -395,7 +394,7 @@ const ItemDetail = () => {
                 variant="contained"
                 onClick={() => {
                   dispatch(changeName({ name, id: current, access }));
-                  dispatch(getBoxes(owner_id, id));
+                  dispatch(getBoxes(box_id, id));
                   setName("");
                   setAccess();
                   setOpenName(false);

@@ -1,26 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import GoBack from "../../components/goBack/GoBack";
-import {
-  Box,
-  Button,
-  Modal,
-  TextField,
-  Typography,
-  FormGroup,
-  FormControlLabel,
-  Switch,
-  Chip,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Paper,
-  Tabs,
-  Tab,
-} from "@mui/material";
+import { Box, Typography, Tabs, Tab } from "@mui/material";
 
 import ItemDetail from "./ItemDetail";
 import BoxWorkers from "./BoxWorkers";
@@ -57,18 +38,20 @@ function a11yProps(index) {
 const Items = () => {
   const { id, owner_id, user_id } = useParams();
   const location = useLocation();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  useEffect(()=>{
-    dispatch(getBoxWorkers({
-      id
-    }))
-  },[])
+  useEffect(() => {
+    dispatch(
+      getBoxWorkers({
+        id,
+      })
+    );
+  }, []);
   return (
     <div>
       <Box m={2}>

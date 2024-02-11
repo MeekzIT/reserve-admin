@@ -15,6 +15,8 @@ import {
   GET_WORKERS,
   ADD_WORKER,
   DLE_WORKER,
+  GET_BOX_IMAGE,
+  ADD_BOX_IMAGE,
 } from "../types";
 
 const initialState = {
@@ -28,6 +30,7 @@ const initialState = {
   workers: null,
   itemInfo: null,
   singleItem: null,
+  images: null,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -118,6 +121,19 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         workers: editedWorklers,
+      };
+    case GET_BOX_IMAGE:
+      return {
+        ...state,
+        images: action.payload,
+      };
+    case ADD_BOX_IMAGE:
+      return { ...state, images: [...state.images, action.payload] };
+    case DELETE_OWNER:
+      const editedImages = state.images.filter((i) => i.id !== action.payload);
+      return {
+        ...state,
+        images: editedImages,
       };
     default:
       return state;

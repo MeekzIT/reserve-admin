@@ -19,12 +19,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import ImageIcon from "@mui/icons-material/Image";
 import EditIcon from "@mui/icons-material/Edit";
 import { useIsMobile } from "../../hooks/useScreenType";
-import { addBox, destroyBox } from "../../store/actions/box";
+import { addBox, destroyBox, getBoxImages } from "../../store/actions/box";
 import CloseIcon from "@mui/icons-material/Close";
 import GoBack from "../../components/goBack/GoBack";
 import { YMaps, Map, Placemark, ZoomControl } from "react-yandex-maps";
+import BoxesImages from "./BoxesImages";
 
 const Boxes = () => {
   const { id, user_id, owner: ownerParam } = useParams();
@@ -39,11 +41,14 @@ const Boxes = () => {
   const boxInfo = useSelector((state) => state.user.boxInfo);
   const [openDelete, setOpenDelete] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openImage, setOpenImage] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const [name, setName] = useState(null);
   const [geo, setGeo] = useState(null);
   const [interval, setInterval] = useState(null);
+  const [timeZone, setTimeZone] = useState(null);
   const [openAdd, setOpenAdd] = useState(false);
+
   const [pinCoordinates, setPinCoordinates] = useState([40.18111, 44.51361]); // Initial coordinates
 
   const handleCloseDelete = () => setOpenDelete(false);
@@ -133,6 +138,7 @@ const Boxes = () => {
                     <TableCell align="left"></TableCell>
                     <TableCell align="left"></TableCell>
                     <TableCell align="left"></TableCell>
+                    <TableCell align="left"></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -157,6 +163,7 @@ const Boxes = () => {
                         </Button>
                       </TableCell>
                       <TableCell align="left">{row.geolocation}</TableCell>
+
                       <TableCell align="left">
                         <Button
                           variant="outlined"
@@ -165,11 +172,28 @@ const Boxes = () => {
                             setGeo(row.desc);
                             setPinCoordinates([row.lat, row.lng]);
                             setInterval(row.interval);
+                            setTimeZone(row.timeZone);
                             setCurrentId(row.id);
                             setOpen(true);
                           }}
                         >
                           <EditIcon />
+                        </Button>
+                      </TableCell>
+                      <TableCell align="left">
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            dispatch(
+                              getBoxImages({
+                                boxId: row.id,
+                              })
+                            );
+                            setCurrentId(row.id);
+                            setOpenImage(true);
+                          }}
+                        >
+                          <ImageIcon />
                         </Button>
                       </TableCell>
                       <TableCell align="left">
@@ -183,18 +207,6 @@ const Boxes = () => {
                           <DeleteIcon sx={{ color: "white" }} />
                         </Button>
                       </TableCell>
-
-                      {/* <TableCell align="left">
-                        <Button
-                          variant="outlined"
-                          onClick={() => {
-                            setOwnerId(row.id);
-                            setOpenStatistics(true);
-                          }}
-                        >
-                          <AutoGraphIcon />
-                        </Button>
-                      </TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>
@@ -222,7 +234,8 @@ const Boxes = () => {
             onClick={() => {
               setOpen(false);
               setGeo("");
-              setName("");
+              setInterval("");
+              setTimeZone("");
             }}
           >
             <CloseIcon fontSize="large" />
@@ -249,11 +262,20 @@ const Boxes = () => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  label={t("desc")}
+                  label={t("interval")}
                   variant="outlined"
                   fullWidth
                   value={interval}
                   onChange={(e) => setInterval(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  label={t("interval")}
+                  variant="outlined"
+                  fullWidth
+                  value={timeZone}
+                  onChange={(e) => setTimeZone(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -362,6 +384,15 @@ const Boxes = () => {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  label={t("interval")}
+                  variant="outlined"
+                  fullWidth
+                  value={timeZone}
+                  onChange={(e) => setTimeZone(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <YMaps>
                   <Map
                     defaultState={{ center: pinCoordinates, zoom: 12 }}
@@ -464,6 +495,11 @@ const Boxes = () => {
           </Typography>
         </Box>
       </Modal>
+      <BoxesImages
+        open={openImage}
+        setOpen={setOpenImage}
+        current={currentId}
+      />
     </div>
   );
 };
