@@ -4,6 +4,7 @@ import {
   ADD_OWNER,
   ADD_USER,
   ADD_WORKER,
+  ANULATE_USER,
   DELETE_OWNER,
   DLE_WORKER,
   EDIT_BOX,
@@ -64,6 +65,57 @@ export const addUsers = (data) => {
   };
 };
 
+
+export const editUsers = data => {
+	return dispatch => {
+		axios
+			.post(`${keys.api}/tech/edit`, data, {
+				headers: {
+					Authorization: `Bearer ${keys.token}`,
+				},
+			})
+			.then(response => {
+				if (response.data.succes) {
+					Swal.fire({
+						position: "center",
+						iconColor: "#008491",
+						icon: "success",
+						showConfirmButton: false,
+						timer: 1500,
+					})
+				}
+			})
+			.catch(error => {
+				console.error(error)
+			})
+	}
+}
+
+export const destroyUsers = data => {
+	return dispatch => {
+		axios
+			.post(`${keys.api}/tech/destroy`, data, {
+				headers: {
+					Authorization: `Bearer ${keys.token}`,
+				},
+			})
+			.then(response => {
+				if (response.data.succes) {
+					Swal.fire({
+						position: "center",
+						iconColor: "#008491",
+						icon: "success",
+						showConfirmButton: false,
+						timer: 1500,
+					})
+				}
+			})
+			.catch(error => {
+				console.error(error)
+			})
+	}
+}
+
 export const getSingleUser = (id) => {
   return (dispatch) => {
     axios
@@ -86,6 +138,14 @@ export const getSingleUser = (id) => {
       });
   };
 };
+
+export const anulateUser = () => {
+	return dispatch => {
+		dispatch({
+			type: ANULATE_USER,
+		})
+	}
+}
 
 export const getBoxes = (id, boxId) => {
   return (dispatch) => {

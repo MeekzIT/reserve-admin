@@ -17,6 +17,7 @@ import {
   DLE_WORKER,
   GET_BOX_IMAGE,
   ADD_BOX_IMAGE,
+  ANULATE_USER,
 } from "../types";
 
 const initialState = {
@@ -35,107 +36,111 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USERS:
-      return {
-        ...state,
-        users: action.payload.paginateData,
-        count: action.payload.count,
-      };
-    case ADD_USER:
-      return {
-        ...state,
-        users: [...state.users, action.payload],
-        count: Number(state.count) + 1,
-      };
-    case GET_SINGLE_USER:
-      return {
-        ...state,
-        single: action.payload,
-      };
-    case GET_BOXES:
-      return {
-        ...state,
-        boxes: action.payload.paginateData,
-        items: action.payload.items,
-      };
-    case EDIT_BOX:
-      const { id, name, desc, lat, lng } = action.payload;
-      const updatedItems = state.boxes.map((item) =>
-        item.id === id ? { ...item, name, desc, lat, lng } : item
-      );
-      return { ...state, boxes: updatedItems };
-    case ADD_BOX:
-      return {
-        ...state,
-        boxes: [...state.boxes, action.payload],
-      };
-    case DESTSROY_BOX:
-      const editedNoxData = state.boxes.filter((i) => i.id !== action.payload);
-      return {
-        ...state,
-        boxes: editedNoxData,
-      };
-    case GET_SINGLE_OWNER:
-      let singleOwner = state.single?.Owners?.filter(
-        (i) => i.id == action.payload
-      );
-      return {
-        ...state,
-        owner: singleOwner[0],
-      };
-    case GET_SINGLE_BOX:
-      let singleBox = state.boxes?.filter((i) => i.id == action.payload);
-      return {
-        ...state,
-        box: singleBox[0],
-      };
-    case ADD_OWNER:
-      return {
-        ...state,
-        single: {
-          ...state.single,
-          Owners: [...state.single.Owners, action.payload],
-        },
-      };
-    case DELETE_OWNER:
-      const editedData = state.single.Owners.filter(
-        (i) => i.id !== action.payload
-      );
-      return {
-        ...state,
-        single: {
-          ...state.single,
-          Owners: editedData,
-        },
-      };
-    case GET_SINGLE_ITEM:
-      return { ...state, singleItem: action.payload };
-    case GET_WORKERS:
-      return { ...state, workers: action.payload };
-    case ADD_WORKER:
-      return { ...state, workers: [...state.workers, action.payload] };
-    case DLE_WORKER:
-      const editedWorklers = state.workers.filter(
-        (i) => i.id !== action.payload
-      );
-      return {
-        ...state,
-        workers: editedWorklers,
-      };
-    case GET_BOX_IMAGE:
-      return {
-        ...state,
-        images: action.payload,
-      };
-    case ADD_BOX_IMAGE:
-      return { ...state, images: [...state.images, action.payload] };
-    case DELETE_OWNER:
-      const editedImages = state.images.filter((i) => i.id !== action.payload);
-      return {
-        ...state,
-        images: editedImages,
-      };
-    default:
-      return state;
-  }
+		case GET_USERS:
+			return {
+				...state,
+				users: action.payload.paginateData,
+				count: action.payload.count,
+			}
+		case ADD_USER:
+			return {
+				...state,
+				users: [...state.users, action.payload],
+				count: Number(state.count) + 1,
+			}
+		case GET_SINGLE_USER:
+			return {
+				...state,
+				single: action.payload,
+			}
+		case GET_BOXES:
+			return {
+				...state,
+				boxes: action.payload.paginateData,
+				items: action.payload.items,
+			}
+		case EDIT_BOX:
+			const { id, name, desc, lat, lng } = action.payload
+			const updatedItems = state.boxes.map(item =>
+				item.id === id ? { ...item, name, desc, lat, lng } : item
+			)
+			return { ...state, boxes: updatedItems }
+		case ADD_BOX:
+			return {
+				...state,
+				boxes: [...state.boxes, action.payload],
+			}
+		case DESTSROY_BOX:
+			const editedNoxData = state.boxes.filter(i => i.id !== action.payload)
+			return {
+				...state,
+				boxes: editedNoxData,
+			}
+		case GET_SINGLE_OWNER:
+			let singleOwner = state.single?.Owners?.filter(
+				i => i.id == action.payload
+			)
+			return {
+				...state,
+				owner: singleOwner[0],
+			}
+		case ANULATE_USER: {
+			return {
+				...state,
+				single: null,
+			}
+		}
+		case GET_SINGLE_BOX:
+			let singleBox = state.boxes?.filter(i => i.id == action.payload)
+			return {
+				...state,
+				box: singleBox[0],
+			}
+		case ADD_OWNER:
+			return {
+				...state,
+				single: {
+					...state.single,
+					Owners: [...state.single.Owners, action.payload],
+				},
+			}
+		case DELETE_OWNER:
+			const editedData = state.single.Owners.filter(
+				i => i.id !== action.payload
+			)
+			return {
+				...state,
+				single: {
+					...state.single,
+					Owners: editedData,
+				},
+			}
+		case GET_SINGLE_ITEM:
+			return { ...state, singleItem: action.payload }
+		case GET_WORKERS:
+			return { ...state, workers: action.payload }
+		case ADD_WORKER:
+			return { ...state, workers: [...state.workers, action.payload] }
+		case DLE_WORKER:
+			const editedWorklers = state.workers.filter(i => i.id !== action.payload)
+			return {
+				...state,
+				workers: editedWorklers,
+			}
+		case GET_BOX_IMAGE:
+			return {
+				...state,
+				images: action.payload,
+			}
+		case ADD_BOX_IMAGE:
+			return { ...state, images: [...state.images, action.payload] }
+		case DELETE_OWNER:
+			const editedImages = state.images.filter(i => i.id !== action.payload)
+			return {
+				...state,
+				images: editedImages,
+			}
+		default:
+			return state
+	}
 };
