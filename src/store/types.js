@@ -75,3 +75,7 @@ export const GET_BOX_IMAGE = "GET_BOX_IMAGE"
 export const DESTROY_BOX_IMAGE = "DESTROY_BOX_IMAGE"
 
 export const ANULATE_USER = "ANULATE_USER"
+
+export const GET_MEMBERS = "GET_MEMBERS"
+export const DEL_MEMBERS = "DEL_MEMBERS"
+export const BLOCK_MEMBERS = "BLOCK_MEMBERS"

@@ -8,6 +8,7 @@ import {
   CATEGORIES_PAGE,
   COUNTRIES_PAGE,
   HOME_PAGE,
+  MEMBERS_PAGE,
   SUPORT_PAGE,
   TYPES_PAGE,
   USERS_PAGE,
@@ -29,12 +30,13 @@ const Sidebar = ({ close, setClose }) => {
   const admin = useSelector((state) => state.auth.admin);
 
   const superPages = [
-    { id: 1, path: HOME_PAGE, name: t("home") },
-    { id: 2, path: ADMINS_PAGE, name: t("admins") },
-    { id: 3, path: CATEGORIES_PAGE, name: t("categories") },
-    { id: 4, path: TYPES_PAGE, name: t("add-type") },
-    { id: 5, path: COUNTRIES_PAGE, name: t("countries") },
-  ];
+		{ id: 1, path: HOME_PAGE, name: t("home") },
+		{ id: 2, path: ADMINS_PAGE, name: t("admins") },
+		{ id: 2, path: MEMBERS_PAGE, name: t("Members") },
+		{ id: 3, path: CATEGORIES_PAGE, name: t("categories") },
+		{ id: 4, path: TYPES_PAGE, name: t("add-type") },
+		{ id: 5, path: COUNTRIES_PAGE, name: t("countries") },
+	]
 
   const pages = [
     { id: 1, path: HOME_PAGE, name: t("home") },

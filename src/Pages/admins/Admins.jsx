@@ -176,19 +176,11 @@ const Admins = () => {
 					</TableContainer>
 				</Box>
 			</Box>
-			<Modal
-				open={openSettings}
-				onClose={() => setOpenSettings(false)}
-				aria-labelledby='modal-modal-title'
-				aria-describedby='modal-modal-description'
-			>
+			<Modal open={openSettings} onClose={() => setOpenSettings(false)}>
 				<Box sx={style}>
 					<h1>{t("activity")}</h1>
 					<Typography>{t("block-requirement")}</Typography>
-					<div
-						className='mobile-modal-close-btn'
-						onClick={() => setOpenSettings(false)}
-					>
+					<div onClick={() => setOpenSettings(false)}>
 						<CloseIcon fontSize='large' />
 					</div>
 					<FormControlLabel
