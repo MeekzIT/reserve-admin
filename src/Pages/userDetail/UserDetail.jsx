@@ -26,6 +26,12 @@ import AddOwner from "./AddModal"
 import GoBack from "../../components/goBack/GoBack"
 import LockResetIcon from "@mui/icons-material/LockReset"
 import ResetModal from "../../components/resetModal/ResetModal"
+import {
+	getUserCurrent,
+	getUserStatistics,
+} from "../../store/actions/statistics-action"
+import Statistic from "../../components/statistics/Statistics"
+import CurrentState from "../../components/statistics/CurrentState"
 const UserDetail = () => {
 	const { id } = useParams()
 	const { t } = useTranslation()
@@ -35,12 +41,21 @@ const UserDetail = () => {
 	const [loading, setLoading] = useState(true)
 	const data = useSelector(state => state.user.single)
 	const isSuper = useSelector(state => state.auth.isSuper)
+	const statistic = useSelector(state => state.statistics.user)
+	const currentState = useSelector(state => state.statistics.userCurrent)
 	const [openReset, setOpenReset] = useState(false)
 	const [currint, setCurrent] = useState()
+	const [start, setStart] = useState()
+	const [end, setEnd] = useState()
 	useEffect(() => {
 		dispatch(getSingleUser(id))
 		setLoading(false)
 	}, [])
+
+	useEffect(() => {
+		dispatch(getUserStatistics({ userId: id, start, end }))
+		dispatch(getUserCurrent({ userId: id }))
+	}, [start, end])
 
 	const [open, setOpen] = useState(false)
 	const handleOpen = () => setOpen(true)
@@ -50,6 +65,17 @@ const UserDetail = () => {
 			<Box m={3}>
 				<GoBack prevPath={location.pathname} />
 			</Box>
+			<Box sx={{ display: "flex", alignItems: "center" }}>
+				<Statistic
+					data={statistic}
+					start={start}
+					end={end}
+					setStart={setStart}
+					setEnd={setEnd}
+				/>
+				<CurrentState data={currentState} />
+			</Box>
+			<hr />
 			<Box>
 				{loading ? (
 					<div className='loading-box'>
