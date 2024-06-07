@@ -25,7 +25,13 @@ import { useIsMobile } from "../../hooks/useScreenType"
 import { addBox, destroyBox, getBoxImages } from "../../store/actions/box"
 import CloseIcon from "@mui/icons-material/Close"
 import GoBack from "../../components/goBack/GoBack"
-import { YMaps, Map, Placemark, ZoomControl } from "react-yandex-maps"
+import {
+	YMaps,
+	Map,
+	Placemark,
+	ZoomControl,
+	SearchControl,
+} from "react-yandex-maps"
 import BoxesImages from "./BoxesImages"
 import {
 	getOwnerCurrent,
@@ -58,7 +64,9 @@ const Boxes = () => {
 	const [end, setEnd] = useState()
 	const [interval, setInterval] = useState(null)
 	const [timeZone, setTimeZone] = useState(null)
+	const [itemsId, setItemsId] = useState(null)
 	const [openAdd, setOpenAdd] = useState(false)
+	const [searchQuery, setSearchQuery] = useState("")
 
 	const [pinCoordinates, setPinCoordinates] = useState([40.18111, 44.51361]) // Initial coordinates
 
@@ -101,6 +109,28 @@ const Boxes = () => {
 		gap: isMobile && "20px",
 		overflowY: "scroll",
 	}
+
+	const handleSearch = () => {
+		// Use the Geocoder API to get the coordinates for the search query
+		fetch(
+			`https://geocode-maps.yandex.ru/1.x/?apikey=YOUR_API_KEY&format=json&geocode=${searchQuery}`
+		)
+			.then(response => response.json())
+			.then(data => {
+				const coordinates =
+					data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(
+						" "
+					)
+				setPinCoordinates([
+					parseFloat(coordinates[1]),
+					parseFloat(coordinates[0]),
+				])
+			})
+			.catch(error => {
+				console.error("Error fetching coordinates:", error)
+			})
+	}
+
 	useEffect(() => {
 		dispatch(getSingleUser(user_id))
 		dispatch(getBoxes(id))
@@ -200,6 +230,7 @@ const Boxes = () => {
 														setPinCoordinates([row.lat, row.lng])
 														setInterval(row.interval)
 														setTimeZone(row.timeZone)
+														setItemsId(row.itemsId)
 														setCurrentId(row.id)
 														setOpen(true)
 													}}
@@ -263,6 +294,7 @@ const Boxes = () => {
 							setGeo("")
 							setInterval("")
 							setTimeZone("")
+							setItemsId("")
 						}}
 					>
 						<CloseIcon fontSize='large' />
@@ -298,7 +330,7 @@ const Boxes = () => {
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
-									label={t("interval")}
+									label={t("timeZone")}
 									variant='outlined'
 									fullWidth
 									value={timeZone}
@@ -306,14 +338,19 @@ const Boxes = () => {
 								/>
 							</Grid>
 							<Grid item xs={12}>
+								<TextField
+									label={t("Items ID")}
+									variant='outlined'
+									fullWidth
+									value={itemsId}
+									onChange={e => setItemsId(e.target.value)}
+								/>
+							</Grid>
+							<Grid item xs={12}>
 								<YMaps>
 									<Map
 										defaultState={{ center: pinCoordinates, zoom: 12 }}
-										style={{
-											width: "100%",
-											height: "300px",
-											background: "red",
-										}}
+										style={{ width: "100%", height: "300px" }}
 										onClick={handleMapClick}
 										controls={["smallMapDefaultSet"]}
 									>
@@ -321,7 +358,7 @@ const Boxes = () => {
 										<Placemark
 											geometry={pinCoordinates}
 											options={{ draggable: true }}
-											onDrag={handlePinDrag}
+											onDragEnd={handlePinDrag}
 										/>
 									</Map>
 								</YMaps>
@@ -344,12 +381,15 @@ const Boxes = () => {
 											onClick={() => {
 												dispatch(
 													changeBoxSettings({
+														ownerId: id,
 														id: currentId,
 														name,
 														desc: geo,
 														interval,
 														lat: pinCoordinates[0],
 														lng: pinCoordinates[1],
+														timeZone,
+														itemsId,
 													})
 												)
 												setOpen(false)
@@ -412,7 +452,7 @@ const Boxes = () => {
 							</Grid>
 							<Grid item xs={12}>
 								<TextField
-									label={t("interval")}
+									label={t("Time Zone")}
 									variant='outlined'
 									fullWidth
 									value={timeZone}
@@ -420,14 +460,19 @@ const Boxes = () => {
 								/>
 							</Grid>
 							<Grid item xs={12}>
+								<TextField
+									label={t("Items ID")}
+									variant='outlined'
+									fullWidth
+									value={itemsId}
+									onChange={e => setItemsId(e.target.value)}
+								/>
+							</Grid>
+							<Grid item xs={12}>
 								<YMaps>
 									<Map
 										defaultState={{ center: pinCoordinates, zoom: 12 }}
-										style={{
-											width: "100%",
-											height: "300px",
-											background: "red",
-										}}
+										style={{ width: "100%", height: "300px" }}
 										onClick={handleMapClick}
 										controls={["smallMapDefaultSet"]}
 									>
@@ -467,6 +512,8 @@ const Boxes = () => {
 														interval,
 														lat: pinCoordinates[0],
 														lng: pinCoordinates[1],
+														timeZone,
+														itemsId,
 													})
 												)
 												setOpenAdd(false)
